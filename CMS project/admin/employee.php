@@ -34,8 +34,7 @@
             //  }
 
             //  Ternary condition
-
-            $do = $_GET['do'] ? $_GET['do'] : 'Manage';
+            $do = (isset($_GET['do'])) ? $_GET['dog'] : 'Manage';
 
              if($do == 'Manage'){
                  echo "This is our all employee page";
