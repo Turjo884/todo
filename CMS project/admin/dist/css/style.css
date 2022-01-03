@@ -1,0 +1,16 @@
+.action-links ul{
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+.action-links ul li{
+    list-style: none;
+    display: inline;
+    padding: 0 5px;
+}
+.action-links ul li .fa-edit{
+    color: #28A745;
+}
+.action-links ul li .fa-edit{
+    color: #DC3545;
+}

@@ -43,13 +43,13 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="employee.php" class="nav-link">
+                <a href="employee.php?do=Add" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Add new employee</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="employee.php" class="nav-link">
+                <a href="employee.php?do=Manage" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Manage all employee</p>
                 </a>

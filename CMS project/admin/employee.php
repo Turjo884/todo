@@ -34,10 +34,140 @@
             //  }
 
             //  Ternary condition
-            $do = (isset($_GET['do'])) ? $_GET['dog'] : 'Manage';
+            $do = (isset($_GET['do'])) ? $_GET['do'] : 'Manage';
 
+            // All employee lists
              if($do == 'Manage'){
-                 echo "This is our all employee page";
+               ?>
+
+                <div class="card">
+                  <div class="card-header">
+                    <h3 class="card-title mb-2">Recently Added Products</h3>
+
+                  
+                  <!-- /.card-header -->
+                  <div class="card-body">
+                  <table class="table">
+                      <thead class="table table-dark">
+                        <tr>
+                          <th scope="col">#Sl</th>
+                          <th scope="col">Image</th>
+                          <th scope="col">Full Name</th>
+                          <th scope="col">Email</th>
+                          <th scope="col">Designation</th>
+                          <th scope="col">Phone</th>
+                          <th scope="col">Role</th>
+                          <th scope="col">Status</th>
+                          <th scope="col">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+
+
+                        <?php
+                        
+                        $sql = "SELECT * FROM users WHERE role = 0";
+                        $readEmployee = mysqli_query($db, $sql);
+
+                        $countEmployee = mysqli_num_rows($readEmployee);
+                        $s = 0;
+
+                        if($countEmployee > 0){
+                          while($row = mysqli_fetch_assoc($readEmployee)){
+                            $id          = $row['id'];
+                            $name        = $row['name'];
+                            $email       = $row['email'];
+                            $designation = $row['designation'];
+                            $phone       = $row['phone'];
+                            $adress      = $row['adress'];
+                            $role        = $row['role'];
+                            $status      = $row['status'];
+                            $image       = $row['image'];
+                            $join_date   = $row['join_date'];
+                            $s++;
+
+                            ?>
+
+                            <tr>
+                            <th><?php echo $s ?></th>
+                            <td>Image</td>
+                            <td><?php echo $name ?></td>
+                            <td><?php echo $email ?></td>
+                            <th><?php echo $designation ?></th>
+                            <td><?php echo $phone ?></td>
+                            <td>
+                              <?php 
+                              
+                              if($role == 0){
+                                ?>
+                                  <span class="badge badge-success">Super Admin</span>
+                                <?php
+                              }
+                              else if($role == 1){
+                                ?>
+                                    <span class="badge badge-primary">Employee </span>
+                                <?php
+                              }
+                              
+                              ?>
+                            </td>
+                            <td>
+
+                            <?php 
+                              
+                              if($status == 0){
+                                ?>
+                                  <span class="badge badge-danger">Inactive</span>
+                                <?php
+                              }
+                              else if($status == 1){
+                                ?>
+                                    <span class="badge badge-info">Active</span>
+                                <?php
+                              }
+                              
+                              ?>
+
+                            </td>
+
+                              <th>
+                                <div class="action-links">
+                                  <ul>
+                                    <li>
+                                      <a href=""><i class="fa fa-edit"></i></a>
+                                    </li>
+                                    <li>
+                                      <a href=""><i class="fa fa-trash"></i></a>
+                                    </li>
+                                  </ul>
+                                </div>
+                              </th>
+                          </tr>
+
+                            <?php
+                          }
+                          ?>
+
+                           
+
+                          <?php
+                        }
+                        else{
+                          ?>
+                            <div class="alert alert-danger mt-4">No Employee Data Record Found</div>
+                          <?php
+                        }
+                        ?>
+
+
+                        
+                      </tbody>
+                    </table>
+                  </div>
+                  <!-- /.card-body -->
+                </div>
+
+               <?php 
              }
              else if($do == 'Add'){
                  echo "This is our add user HTML page";
