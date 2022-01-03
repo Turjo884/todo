@@ -36,15 +36,14 @@
             //  Ternary condition
             $do = (isset($_GET['do'])) ? $_GET['do'] : 'Manage';
 
-            // All employee lists
+            // All employee lists Start
              if($do == 'Manage'){
                ?>
 
                 <div class="card">
                   <div class="card-header">
-                    <h3 class="card-title mb-2">Recently Added Products</h3>
+                    <h3 class="card-title mb-2">Manage Employee</h3>
 
-                  
                   <!-- /.card-header -->
                   <div class="card-body">
                   <table class="table">
@@ -66,7 +65,7 @@
 
                         <?php
                         
-                        $sql = "SELECT * FROM users WHERE role = 0";
+                        $sql = "SELECT * FROM users WHERE role = 1";
                         $readEmployee = mysqli_query($db, $sql);
 
                         $countEmployee = mysqli_num_rows($readEmployee);
@@ -156,7 +155,7 @@
                           <?php
                         }
                         ?>
-                        
+
                       </tbody>
                     </table>
                   </div>
@@ -165,9 +164,98 @@
 
                <?php 
              }
+            //End All Employee List End
+
+            //Start Add New employee 
              else if($do == 'Add'){
-                 echo "This is our add user HTML page";
+              ?>
+
+                <div class="card">
+                  <div class="card-header">
+                    <h3 class="card-title mb-2">Add New Employee</h3>
+                  </div>
+                  
+                  <!-- /.card-header -->
+                  <div class="card-body">
+                    <form action="employee.php?do=Store" method="POST" enctype="multipart/form-data">
+                      <div class="row">
+                        <div class="col-lg-6">
+                          <div class="form-group">
+                            <label>Full Name</label>
+                            <input type="name" class="form-control" name="name" required="required">
+                          </div>
+
+                          <div class="form-group">
+                            <label>Email Address</label>
+                            <input type="email" class="form-control" name="email" required="required">
+                          </div>
+
+                          <div class="form-group">
+                            <label>Password</label>
+                            <input type="password" class="form-control" name="password" required="required">
+                          </div>
+
+                          <div class="form-group">
+                            <label>Re-password</label>
+                            <input type="password" class="form-control" name="repassword" required="required">
+                          </div>
+
+                          <div class="form-group">
+                            <label>Phone</label>
+                            <input type="phone" class="form-control" name="phone">
+                          </div>
+
+                        </div>
+
+                        <div class="col-lg-6">
+                          <div class="form-group">
+                            <label>Address</label>
+                            <input type="text" class="form-control" name="address">
+                          </div>
+
+                          <div class="form-group">
+                            <label>Designation</label>
+                            <input type="text" class="form-control" name="designation" required="required">
+                          </div>
+
+                          <div class="form-group">
+                            <label>User Role</label>
+                              <select name="role" class="form-control">
+                                <option value="1">Please Select Role</option>
+                                <option value="0">Admin</option>
+                                <option value="1">Employee</option>
+                              </select>
+                          </div>
+
+                          <div class="form-group">
+                            <label>Status</label>
+                              <select name="status" class="form-control">
+                                <option value="1">Please Select Status</option>
+                                <option value="0">Inactive</option>
+                                <option value="1">Active</option>
+                              </select>
+                          </div>
+
+                          <div class="form-group">
+                            <label>Image</label>
+                            <input type="file" name="image" class="form-control-file">
+                          </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                          <input type="submit" name="register" class="btn btn-info btn-block btn-flat" value="Register New User">
+                        </div>
+                      </div>
+                    </form>
+                  
+                  </div>
+                </div>
+
+              <?php
              }
+
+            //End Add New employee
+
              else if($do == 'Store'){
                 echo "We will store the data of our new employee in DB";
              }
