@@ -89,7 +89,19 @@
 
                             <tr>
                             <th><?php echo $s ?></th>
-                            <td>Image</td>
+                            <td><?php
+                            
+                            if(!empty($image)){
+                              ?>
+
+                              <img src="dist/img/users/<?php echo $image; ?>" alt="" class="employee-img">
+
+                            <?php
+                            }
+                            else{
+                              echo "Not uploaded";
+                            }
+                            ?></td>
                             <td><?php echo $name ?></td>
                             <td><?php echo $email ?></td>
                             <th><?php echo $designation ?></th>
@@ -256,9 +268,63 @@
 
             //End Add New employee
 
+            // Start Employee Store
              else if($do == 'Store'){
-                echo "We will store the data of our new employee in DB";
+               if(isset($_POST['register'])){
+                
+                $name         = $_POST['name']; 
+                $email        = $_POST['email']; 
+                $password     = mysqli_real_escape_string($db, $_POST['password']); 
+                $repassword   = mysqli_real_escape_string($db, $_POST['repassword']);
+                $phone        = $_POST['phone'];
+                $address      = mysqli_real_escape_string($db, $_POST['address']); 
+                $designation  = $_POST['designation']; 
+                $role         = $_POST['role']; 
+                $status       = $_POST['status'];
+                $image        = $_FILES['image']['name'];
+                $image_tmp    = $_FILES['image']['tmp_name'];
+
+                if($password == $repassword){
+                  $hassedPassword = sha1($password);
+
+                  // If Image Found
+                  if(!empty($image)){
+
+                    $imageName = rand(1,99999999) .  "-employee-" . $name;
+                    move_uploaded_file($image_tmp, "dist/img/users/" . $imageName);
+
+                    $sql ="INSERT INTO users (name, email, password, designation,phone, adress, role, status, image, join_date) VALUES ('$name', '$email', '$hassedPassword', '$designation', '$phone', '$address', '$role', '$status', '$imageName', now())";
+
+                    $addEmployee = mysqli_query($db, $sql);
+
+                    if($addEmployee){
+                      header("Location: employee.php?do=Manage");
+                    }
+                    else{
+                      die("Mysqli Query Failed." . mysqli_error($db));
+                    }
+
+                  } 
+                  // If Image Not Found
+                  else{
+
+                    $sql ="INSERT INTO users (name, email, password, designation,phone, adress, role, status, join_date) VALUES ('$name', '$email', '$hassedPassword', '$designation', '$phone', '$address', '$role', '$status', now())";
+
+                    $addEmployee = mysqli_query($db, $sql);
+
+                    if($addEmployee){
+                      header("Location: employee.php?do=Manage");
+                    }
+                    else{
+                      die("Mysqli Query Failed." . mysqli_error($db));
+                    }
+
+                  }
+                }
+               }
              }
+            // End Employee Store
+
              else if($do == 'Edit'){
                 echo "This is our edit user HTML page";
              }
