@@ -34,6 +34,8 @@
 
                 // All working list start
 
+
+                // Start Manage Section
                 if($do == 'Manage'){
                     ?>
 
@@ -98,7 +100,7 @@
                                   $employee = mysqli_query($db, $sql);
 
                                   while($row = mysqli_fetch_assoc($employee)){
-                                    $id   = $row['id'];
+                                    // $id   = $row['id'];
                                     $name = $row['name'];
                                      
                                     echo $name;
@@ -113,7 +115,7 @@
                                   $employee = mysqli_query($db, $sql);
 
                                   while($row = mysqli_fetch_assoc($employee)){
-                                    $id   = $row['id'];
+                                    $emp_id   = $row['id'];
                                     $image = $row['image'];
                                     
                                     if(!empty($image)){
@@ -154,7 +156,7 @@
                                     <div class="action-links">
                                       <ul>
                                         <li>
-                                          <a href="#"><i class="fa fa-edit"></i></a>
+                                          <a href="task.php?do=Edit&id=<?php echo $id; ?>"><i class="fa fa-edit"></i></a>
                                         </li>
                                         <li>
                                           <a href="#"><i class="fa fa-trash"></i></a>
@@ -179,6 +181,8 @@
 
                     <?php
                 }
+
+                // Start Add Section
                 else if($do == 'Add'){
                   ?>
 
@@ -205,7 +209,7 @@
                           <div class="form-group">
                             <label>Task Deadline</label>
                             <!-- <input type="date" id="picker" class="form-control"> -->
-                            <input type="text" name="daterange" value="12/01/2022 - 12/15/2022">
+                            <input type="text" name="daterange">
                           </div>
                         </div>
 
@@ -258,6 +262,8 @@
 
                   <?php
                 }
+
+                // Start Store Section
                 else if($do == 'Store'){
 
                   if(isset($_POST['addTask'])){
@@ -282,12 +288,137 @@
                   }
 
                 }
+
+                // Start Edit Section
                 else if($do == 'Edit'){
+                  if(isset($_GET['id'])){
+                    $task_id = $_GET['id'];
 
+                    $sql = "SELECT * FROM todo WHERE id = '$task_id'";
+                    $readTask = mysqli_query($db,$sql);
+                    while($row = mysqli_fetch_assoc($readTask)){
+                      $id            = $row['id'];
+                      $user_id       = $row['user_id'];
+                      $task_title    = $row['task_title'];
+                      $description   = $row['description'];
+                      $deadline      = $row['deadline'];
+                      $status        = $row['status'];
+                      $note          = $row['note'];
+                      $created_at	   = $row['created_at'];
+                      ?>
+
+                      <div class="card">
+                        <div class="card-header">
+                          <h3 class="card-title mb-2">Edit Employee Task</h3>
+                        </div>
+                        
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                          <form action="task.php?do=Update" method="POST">
+                            <div class="row">
+                              <div class="col-lg-6">
+                                <div class="form-group">
+                                  <label>Task Title</label>
+                                  <input type="text" class="form-control" name="task_title" placeholder="Please enter the task title" value="<?php echo  $task_title;?>">
+                                </div>
+
+                                <div class="form-group">
+                                  <label>Description</label>
+                                  <textarea type="text" class="form-control" name="description" rows="7" placeholder="Please enter the description..." ><?php echo $description;?></textarea>
+                                </div>
+
+                                <div class="form-group">
+                                  <label>Task Deadline</label>
+                                  <!-- <input type="date" id="picker" class="form-control"> -->
+                                  <input type="text" name="daterange" value="<?php echo $deadline; ?>">
+                                </div>
+                              </div>
+
+                              <div class="col-lg-6">
+                                <div class="form-group">
+                                  <label>Select Employee Name</label>
+                                  <select class="form-control" name="user_id">
+                                    <option>Please Select Employee Name</option>
+                                    <?php
+                                    
+                                    $sql = "SELECT * FROM users WHERE role = 1 ORDER BY name ASC";
+                                    $allEmployee = mysqli_query($db, $sql);
+
+                                    while($row = mysqli_fetch_assoc($allEmployee)){
+
+                                      $emp_id    = $row['id'];
+                                      $name      = $row['name'];
+                                      ?>
+
+                                      <option value="<?php echo $emp_id; ?>" 
+                                      <?php 
+                                      if ($emp_id == $user_id){echo 'Selected';}
+                                      ?>
+                                      ><?php echo $name; ?></option>
+
+                                      <?php 
+                                    }
+                                    ?>
+                                  </select>
+                                </div>
+
+                                <div class="form-group">
+                                  <label>Status</label>
+                                  <select class="form-control" name="status">
+                                    <option value="1">Please Select Status</option>
+                                    <option value="1" <?php if ($status == 1){echo 'Selected';}?>>Active</option>
+                                    <option value="0" <?php if ($status == 0){echo 'Selected';}?>>Inactive</option>
+                                  </select>
+                                </div>
+
+                                <div class="form-group">
+                                  <label>Note</label>
+                                  <textarea type="text" class="form-control" name="note" rows="7" placeholder="Insert note here"><?php echo $note;?></textarea>
+                                </div>
+
+                                <div class="form-group">
+                                  <input type="hidden" name="task_id" value = "<?php echo $id; ?>">
+                                  <input type="submit" name="updateTask" class="btn btn-info btn-block btn-flat" value="Save New Changes">
+                                </div>
+                              </div>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+
+                      <?php
+                    }
+                   
+                  }
+                  
                 }
+
+                // Start Update Section
                 else if($do == 'Update'){
+                 if(isset($_POST['updateTask'])){
 
+                    $task_id       = $_POST['task_id'];
+                    $task_title    = $_POST['task_title'];
+                    $description   = $_POST['description'];
+                    $daterange     = $_POST['daterange'];
+                    $user_id       = $_POST['user_id'];
+                    $status        = $_POST['status'];
+                    $note          = $_POST['note'];
+
+                    $sql = "UPDATE todo SET user_id = '$user_id', task_title = '$task_title', description = '$description', deadline = '$daterange', status = '$status', note = '$note' WHERE id = '$task_id'";
+
+                    $updateTask = mysqli_query($db, $sql);
+                    
+                    if($updateTask){
+                      header("Location: task.php?do=Manage");
+                    }
+                    else{
+                      die("Mysqli Query Failed. " . mysqli_error($db));
+                    }
+                 }
                 }
+
+                // Start Delete Section
                 else if($do == 'Delete'){
 
                 }
