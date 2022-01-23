@@ -138,12 +138,12 @@
                               
                                     if($status == 0){
                                       ?>
-                                        <span class="badge badge-danger">Inactive</span>
+                                        <span class="badge badge-warning">In Progress</span>
                                       <?php
                                     }
                                     else if($status == 1){
                                       ?>
-                                          <span class="badge badge-info">Active</span>
+                                          <span class="badge badge-success">Done</span>
                                       <?php
                                     }
                                   
@@ -159,12 +159,40 @@
                                           <a href="task.php?do=Edit&id=<?php echo $id; ?>"><i class="fa fa-edit"></i></a>
                                         </li>
                                         <li>
-                                          <a href="#"><i class="fa fa-trash"></i></a>
+                                          <a href="" data-toggle="modal" data-target="#delete<?php echo $id; ?>"><i class="fa fa-trash"></i></a>
                                         </li>
                                       </ul>
                                    </div>
 
                                   </td>
+
+
+                                  <!-- Delete Task  -->
+                                  <div class="modal fade" id="delete<?php echo $id; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                  <div class="modal-dialog">
+                                    <div class="modal-content">
+                                      <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Do you really want to delete this task?</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                          <span aria-hidden="true">&times;</span>
+                                        </button>
+                                      </div>
+                                      <div class="modal-body">
+                                        <div class="modal-conformation">
+                                          <ul>
+                                            <li>
+                                              <a href="task.php?do=Delete&id=<?php echo $id; ?>" class="btn btn-danger">Confirm</a>
+                                            </li>
+                                            <li>
+                                            <a href="employee.php?do=Delete&id=<?php echo $id; ?>" class="btn btn-success">Cancel</a>
+                                            </li>
+                                          </ul>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+
                                 </tr>
 
                                 <?php
@@ -241,8 +269,8 @@
                             <label>Status</label>
                             <select class="form-control" name="status">
                               <option value="1">Please Select Status</option>
-                              <option value="1">Active</option>
-                              <option value="0">Inactive</option>
+                              <option value="1">Done</option>
+                              <option value="0">In Progress</option>
                             </select>
                           </div>
 
@@ -366,8 +394,8 @@
                                   <label>Status</label>
                                   <select class="form-control" name="status">
                                     <option value="1">Please Select Status</option>
-                                    <option value="1" <?php if ($status == 1){echo 'Selected';}?>>Active</option>
-                                    <option value="0" <?php if ($status == 0){echo 'Selected';}?>>Inactive</option>
+                                    <option value="1" <?php if ($status == 1){echo 'Selected';}?>>Done</option>
+                                    <option value="0" <?php if ($status == 0){echo 'Selected';}?>>In Progress</option>
                                   </select>
                                 </div>
 
@@ -420,7 +448,20 @@
 
                 // Start Delete Section
                 else if($do == 'Delete'){
+                  if(isset($_GET['id'])){
+                    
+                    $task_del_id = $_GET['id'];
 
+                    $sql = "DELETE FROM todo WHERE id = '$task_del_id'";
+                    $deleteTask = mysqli_query($db, $sql);
+
+                    if($deleteTask){
+                      header("Location: task.php?do=Manage");
+                    }
+                    else{
+                      die("Mysqli Query Failed. " . mysqli_error($db));
+                    }
+                  }
                 }
                 
                 ?>
