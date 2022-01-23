@@ -33,6 +33,13 @@
           </li>
           <li class="nav-header">To Do Application</li>
           
+          
+        
+          <?php
+          // this php is for not to get access the employee in employee.php page
+          if($_SESSION['role'] == 0){
+            ?>
+
           <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon fa fa-users"></i>
@@ -52,6 +59,34 @@
                 <a href="employee.php?do=Manage" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Manage all employee</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+            <?php
+          }
+          ?>
+
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fa fa-users"></i>
+              <p>
+                All Employee Working List
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="task.php?do=Add" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Add new task</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="task.php?do=Manage" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Manage all task</p>
                 </a>
               </li>
             </ul>

@@ -42,6 +42,24 @@
         <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
         <script src="dist/js/pages/dashboard2.js"></script>
 
+        <!-- Start Date Range Picker Js Code -->
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+        <!-- End Date Range Picker Js Code -->
+
+        <!-- Start Script For Date Range Picker -->
+        <script>
+            $(function() {
+            $('input[name="daterange"]').daterangepicker({
+                opens: 'left'
+            }, function(start, end, label) {
+                console.log("A new date selection was made: " + start.format('DD-MM-YYYY') + ' to ' + end.format('DD-MM-YYYY'));
+            });
+            });
+        </script>
+        <!-- End Script For Date Range Picker -->
+
         <?php
         ob_end_flush();
         ?>

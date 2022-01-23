@@ -20,3 +20,24 @@
 .employee-img{
     width: 30px;
 }
+.modal-conformation{
+    text-align: center;
+}
+.modal-conformation ul{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.modal-conformation ul li{
+    display: inline;
+}
+button, input {
+    width: 100%;
+    background: transparent;
+    color: #fff;
+    outline: 0;
+    border: 0.5px solid #6c757d;
+    display: block;
+    padding: 10px;
+    border-radius: 5px;
+}
