@@ -163,11 +163,9 @@
                                         </li>
                                       </ul>
                                    </div>
-
                                   </td>
 
-
-                                  <!-- Delete Task  -->
+                                  <!-- Delete Employee Task  -->
                                   <div class="modal fade" id="delete<?php echo $id; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                   <div class="modal-dialog">
                                     <div class="modal-content">
@@ -184,7 +182,7 @@
                                               <a href="task.php?do=Delete&id=<?php echo $id; ?>" class="btn btn-danger">Confirm</a>
                                             </li>
                                             <li>
-                                            <a href="employee.php?do=Delete&id=<?php echo $id; ?>" class="btn btn-success">Cancel</a>
+                                            <a href="task.php?do=Delete&id=<?php echo $id; ?>" class="btn btn-success">Cancel</a>
                                             </li>
                                           </ul>
                                         </div>
@@ -195,11 +193,9 @@
 
                                 </tr>
 
-                                <?php
+                              <?php
                             }
-
                         }
-
                         ?>
 
                       </tbody>
@@ -216,7 +212,7 @@
 
                 <div class="card">
                   <div class="card-header">
-                    <h3 class="card-title mb-2">Add New Employee</h3>
+                    <h3 class="card-title mb-2">Add New Task</h3>
                   </div>
                   
                   <!-- /.card-header -->

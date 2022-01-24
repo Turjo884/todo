@@ -51,19 +51,28 @@ include "inc/db.php";
         $password             = $row['password'];
         $_SESSION['role']     = $row['role'];
         $status               = $row['status'];
-  
-        if( $email == $_SESSION['email']  && $hassedPass == $password){
-          header("Location: dashboard.php");
+        $_SESSION['msg']      = "Your login information in wrong";
+
+        if($status == 1){
+
+          if( $email == $_SESSION['email']  && $hassedPass == $password){
+            header("Location: dashboard.php");
+          }
+    
+          else if($_SESSION['email'] != $email || $password != $hassedPass){
+            // $_SESSION['msg'] = "Your login information is wrong";
+            header("Location: index.php");
+          }
+    
+          else{
+            // $_SESSION['msg'] = "Your login information is wrong";
+            header ("Location: index.php");
+          }
+
         }
-  
-        else if($_SESSION['email'] != $email || $password != $hassedPass){
-          $_SESSION['msg'] = "Your login information in wrong";
-          header("Location: index.php");
-        }
-  
-        else{
-          $_SESSION['msg'] = "Your login information in wrong";
-          header ("Location: index.php");
+        else if($status == 0){
+          // $_SESSION['msg'] = "Your login information is wrong";
+          echo $_SESSION['msg'];
         }
       }
     }

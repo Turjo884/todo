@@ -64,9 +64,7 @@
             </ul>
           </li>
 
-            <?php
-          }
-          ?>
+
 
           <li class="nav-item">
             <a href="#" class="nav-link">
@@ -91,6 +89,44 @@
               </li>
             </ul>
           </li>
+
+            <?php
+          }
+          ?>
+
+          <!-- For Individual Employee -->
+          <?php
+            if($_SESSION['role'] == 1){
+              ?>
+
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="nav-icon fa fa-users"></i>
+                  <p>
+                    My Working List
+                    <i class="fas fa-angle-left right"></i>
+                  </p>
+                </a>
+                <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    <a href="self.php?do=Add" class="nav-link">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>Add new task</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="self.php?do=Manage" class="nav-link">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>Manage all task</p>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+
+              <?php
+            }
+          ?>
+
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
