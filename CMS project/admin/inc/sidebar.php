@@ -11,7 +11,28 @@
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+          <?php
+          
+          $user_id = $_SESSION['id'] ;
+
+          $sql = "SELECT * FROM users WHERE id = '$user_id'";
+          $readData = mysqli_query($db, $sql);
+
+          while( $row = mysqli_fetch_assoc($readData)){
+            $image = $row['image'];
+
+            if(!empty($image) ){
+              ?>
+                <img src="dist/img/users/<?php echo $image ;?>" class="img-circle elevation-2" alt="User Image">
+              <?php
+            }
+            else{
+              echo "no image found";
+            }
+          }
+          
+          ?>
+        
         </div>
         <div class="info">
           <a href="#" class="d-block"><?php echo $_SESSION['name'] ?></a>
